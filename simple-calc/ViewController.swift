@@ -14,23 +14,8 @@ class ViewController: UIViewController {
     var prevNumber: Double = 0
     var mathOperation = false
     var operationType = 0
-    var counter = 0
-    //var numAverage = 0
-    
-//    func average(_ x: Double...) -> Double {
-//        var num: Double = 0
-//        for i in x {
-//            num = num + i
-//        }
-//
-//        let count = Double(x.count)
-//        let result = num/count
-//        return result
-//    }
-//
-//    func count() {
-//        return
-//    }
+    var counter: Double = 0
+    var numAverage: Double = 0
     
     @IBOutlet weak var lblOutput: UILabel!
     
@@ -52,44 +37,45 @@ class ViewController: UIViewController {
             operationType = sender.tag
             mathOperation = true
             
-            if operationType == 13 {
+            if operationType == 13 { // count for factorial
                 counter = counter + 1
-            }
-            
-        } else if sender.tag == 11{ // Fact
-            if prevNumber == 0 {
-                lblOutput.text = "1"
-            }  else {
-                var number = 1
-                for i in 1...prevNumber {
-                    number = number * Double(i)
+            } else if operationType == 12 { // adding for average
+                numAverage = numAverage + prevNumber
+                counter = counter + 1
+                
+            } else if sender.tag == 11{ // Fact
+                if prevNumber == 0 {
+                    lblOutput.text = "1"
+                }  else {
+                    var number = 1
+                    for i in 1...Int(prevNumber) {
+                        number = number * i
+                    }
+                    lblOutput.text = String(number)
                 }
-                lblOutput.text = String(number)
+                
+            } else if sender.tag == 18 {
+                if operationType == 12 { // Avg
+                    lblOutput.text = String(numAverage / counter)
+                } else if operationType == 13 { // Count
+                    lblOutput.text = String(counter + 1)
+                } else if operationType == 14 { // Divide
+                    lblOutput.text = String(prevNumber / currentNumber)
+                } else if operationType == 15 { // Multiply
+                    lblOutput.text = String(prevNumber * currentNumber)
+                } else if operationType == 16 { // Minus
+                    lblOutput.text = String(prevNumber - currentNumber)
+                } else if operationType == 17 { // Add
+                    lblOutput.text = String(prevNumber + currentNumber)
+                } else if operationType == 19 { // Mod
+                    lblOutput.text = String(prevNumber.truncatingRemainder(dividingBy: currentNumber))
+                }
+            } else if sender.tag == 20 {
+                lblOutput.text = ""
+                prevNumber = 0
+                currentNumber = 0
+                operationType = 0
             }
-        } else if sender.tag == 18 {
-//            if operationType == 12 { // Avg
-//
-//                 lblOutput.text = average()
-//
-//            }
-            if operationType == 13 { // Count
-                lblOutput.text = String(counter + 1)
-            } else if operationType == 14 { // Divide
-                lblOutput.text = String(prevNumber / currentNumber)
-            } else if operationType == 15 { // Multiply
-                lblOutput.text = String(prevNumber * currentNumber)
-            } else if operationType == 16 { // Minus
-                lblOutput.text = String(prevNumber - currentNumber)
-            } else if operationType == 17 { // Add
-                lblOutput.text = String(prevNumber + currentNumber)
-            } else if operationType == 19 { // Mod
-                lblOutput.text = String(prevNumber.truncatingRemainder(dividingBy: currentNumber))
-            }
-        } else if sender.tag == 20 {
-            lblOutput.text = ""
-            prevNumber = 0
-            currentNumber = 0
-            operationType = 0
         }
     }
     
@@ -98,4 +84,3 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 }
-
