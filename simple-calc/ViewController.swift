@@ -14,74 +14,78 @@ class ViewController: UIViewController {
     var prevNumber: Double = 0
     var mathOperation = false
     var operationType = 0
+    var counter = 0
+    //var numAverage = 0
     
-    func fact(_ x: Int) -> Double {
-        if x == 0 {
-            return 1
-        }
-        var num: Double = 1
-        for i in 1...x {
-            num = num * Double(i)
-        }
-        return num
-    }
-    
-    func average(_ x: Double...) -> Double {
-        var num: Double = 0
-        for i in x {
-            num = num + i
-        }
-        
-        let count = Double(x.count)
-        let result = num/count
-        return result
-    }
-    
-    func count() {
-        return
-    }
+//    func average(_ x: Double...) -> Double {
+//        var num: Double = 0
+//        for i in x {
+//            num = num + i
+//        }
+//
+//        let count = Double(x.count)
+//        let result = num/count
+//        return result
+//    }
+//
+//    func count() {
+//        return
+//    }
     
     @IBOutlet weak var lblOutput: UILabel!
     
     @IBAction func btnNumber(_ sender: UIButton) {
         if mathOperation == true {
-            lblOutput.text = String(sender.tag)
+            lblOutput.text = String(sender.tag - 1)
             currentNumber = Double(lblOutput.text!)!
             mathOperation = false
         } else {
-            lblOutput.text = lblOutput.text! + String(sender.tag)
+            lblOutput.text = lblOutput.text! + String(sender.tag - 1)
             currentNumber = Double(lblOutput.text!)!
-            
         }
     }
     
     @IBAction func btnOperation(_ sender: UIButton) {
-        if lblOutput.text != "" && sender.tag != 17 && sender.tag != 18 {
+        
+        if lblOutput.text != "" && sender.tag != 18 && sender.tag != 20 && sender.tag != 11 {
             prevNumber = Double(lblOutput.text!)!
             operationType = sender.tag
             mathOperation = true
             
-        } else if sender.tag == 17 {
-            if operationType == 10 { // Fact
-                lblOutput.text = fact()
-            } else if operationType == 11 { // Avg
-                lblOutput.text = average()
-            } else if operationType == 12 { // Count
-                lblOutput.text = count()
-                // FIX THESE OPERATIONS!! INCLUDE THE CORRECT MATH
-                
-            } else if operationType == 13 { // Divide
+            if operationType == 13 {
+                counter = counter + 1
+            }
+            
+        } else if sender.tag == 11{ // Fact
+            if prevNumber == 0 {
+                lblOutput.text = "1"
+            }  else {
+                var number = 1
+                for i in 1...prevNumber {
+                    number = number * Double(i)
+                }
+                lblOutput.text = String(number)
+            }
+        } else if sender.tag == 18 {
+//            if operationType == 12 { // Avg
+//
+//                 lblOutput.text = average()
+//
+//            }
+            if operationType == 13 { // Count
+                lblOutput.text = String(counter + 1)
+            } else if operationType == 14 { // Divide
                 lblOutput.text = String(prevNumber / currentNumber)
-            } else if operationType == 14 { // Multiply
+            } else if operationType == 15 { // Multiply
                 lblOutput.text = String(prevNumber * currentNumber)
             } else if operationType == 16 { // Minus
                 lblOutput.text = String(prevNumber - currentNumber)
             } else if operationType == 17 { // Add
                 lblOutput.text = String(prevNumber + currentNumber)
-            } else if operationType == 20 { // Mod
+            } else if operationType == 19 { // Mod
                 lblOutput.text = String(prevNumber.truncatingRemainder(dividingBy: currentNumber))
             }
-        } else if sender.tag == 18 {
+        } else if sender.tag == 20 {
             lblOutput.text = ""
             prevNumber = 0
             currentNumber = 0
