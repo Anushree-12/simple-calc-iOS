@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     
     @IBAction func btnOperation(_ sender: UIButton) {
         
-        if lblOutput.text != "" && sender.tag != 18 && sender.tag != 20 && sender.tag != 11 {
+        if lblOutput.text != "" && sender.tag != 18 && sender.tag != 20 {
             prevNumber = Double(lblOutput.text!)!
             operationType = sender.tag
             mathOperation = true
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
                 numAverage = numAverage + prevNumber
                 counter = counter + 1
                 
-            } else if sender.tag == 11{ // Fact
+            } else if sender.tag == 11 { // Fact
                 if prevNumber == 0 {
                     lblOutput.text = "1"
                 }  else {
@@ -53,34 +53,42 @@ class ViewController: UIViewController {
                     }
                     lblOutput.text = String(number)
                 }
-                
-            } else if sender.tag == 18 {
-                if operationType == 12 { // Avg
-                    lblOutput.text = String(numAverage / counter)
-                } else if operationType == 13 { // Count
-                    lblOutput.text = String(counter + 1)
-                } else if operationType == 14 { // Divide
-                    lblOutput.text = String(prevNumber / currentNumber)
-                } else if operationType == 15 { // Multiply
-                    lblOutput.text = String(prevNumber * currentNumber)
-                } else if operationType == 16 { // Minus
-                    lblOutput.text = String(prevNumber - currentNumber)
-                } else if operationType == 17 { // Add
-                    lblOutput.text = String(prevNumber + currentNumber)
-                } else if operationType == 19 { // Mod
-                    lblOutput.text = String(prevNumber.truncatingRemainder(dividingBy: currentNumber))
-                }
-            } else if sender.tag == 20 {
-                lblOutput.text = ""
-                prevNumber = 0
-                currentNumber = 0
-                operationType = 0
             }
+        } else if sender.tag == 18 {
+            if operationType == 12 { // Avg
+                numAverage = numAverage + currentNumber
+                counter = counter + 1
+                lblOutput.text = String(numAverage / counter)
+                counter = 0
+                numAverage = 0
+            } else if operationType == 13 { // Count
+                lblOutput.text = String(counter + 1)
+                counter = 0
+            } else if operationType == 14 { // Divide
+                lblOutput.text = String(prevNumber / currentNumber)
+            } else if operationType == 15 { // Multiply
+                lblOutput.text = String(prevNumber * currentNumber)
+            } else if operationType == 16 { // Minus
+                lblOutput.text = String(prevNumber - currentNumber)
+            } else if operationType == 17 { // Add
+                lblOutput.text = String(prevNumber + currentNumber)
+            } else if operationType == 19 { // Mod
+                lblOutput.text = String(prevNumber.truncatingRemainder(dividingBy: currentNumber))
+            }
+        } else if sender.tag == 20 {
+            lblOutput.text = ""
+            prevNumber = 0
+            currentNumber = 0
+            operationType = 0
+            counter = 0
+            numAverage = 0
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
 }
